@@ -1,22 +1,24 @@
-class Solution:
-    def isValid(self, s: str) -> bool:
-        stack = []
+class Solution(object):
+    def isValid(self, s):
+        n = len(s)
+        if n%2 == 1:
+            return False
+        
+        st = []
 
-        for c in s:
-            if c == '(' or c == '[' or c == '{':
-                stack.append(c)
-
+        for ch in list(s):
+            if ch == '(' or ch == '{' or ch == '[':
+                st.append(ch)
+            
             else:
-                if not stack:
+                if len(st) == 0:
+                    return False
+                top = st.pop()
+                if ch == ')' and top != '(':
+                    return False
+                elif ch == '}' and top != '{':
+                    return False
+                elif ch == ']' and top != '[':
                     return False
 
-                top = stack.pop()
-
-                if c == ')' and top != '(':
-                    return False
-                if c == ']' and top != '[':
-                    return False
-                if c == '}' and top != '{':
-                    return False
-
-        return len(stack) == 0
+        return len(st) == 0
